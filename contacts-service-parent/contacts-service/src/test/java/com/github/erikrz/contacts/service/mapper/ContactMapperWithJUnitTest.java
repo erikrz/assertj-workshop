@@ -9,7 +9,6 @@ import com.github.erikrz.contacts.api.dto.request.CreateContactDto;
 import com.github.erikrz.contacts.service.test.TestDataFactory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 class ContactMapperWithJUnitTest {
@@ -38,7 +37,6 @@ class ContactMapperWithJUnitTest {
         assertNull(resultingContact.getModifiedByUser());
         assertNull(resultingContact.getCreatedDate());
         assertNull(resultingContact.getLastModifiedDate());
-
     }
 
     @Test

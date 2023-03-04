@@ -8,7 +8,7 @@ import com.github.erikrz.contacts.service.test.TestDataFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ContactMapperWithAssertJTest {
+class ContactMapperWithCoreAssertJTest {
 
     public final CreateContactDto updateContact = CreateContactDto.builder()
             .firstName("Erik")

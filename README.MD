@@ -18,10 +18,85 @@ In the `/contacts-service-parent` folder, there there is a parent Maven Project,
     The actual microservice.
 
 
-## JUnit vs AssertJ vs generated AssertJ assertions 
+## JUnit vs Core AssertJ vs Generated AssertJ 
 
 See all these points implemented in 
 * contacts-service [test mapper folder](contacts-service-parent/contacts-service/src/test/java/com/github/erikrz/contacts/service/mapper).
+
+### JUnit
+
+```java
+class ContactMapperWithJUnitTest {
+
+  private final ContactMapper contactMapper = Mappers.getMapper(ContactMapper.class);
+
+  @Test
+    void toContactDto() {
+        var contact = TestDataFactory.getContact();
+
+        var resultingContactDto = contactMapper.toContactDto(contact);
+
+        assertEquals(1, resultingContactDto.getId());
+        assertEquals("Erik", resultingContactDto.getFirstName());
+        assertEquals("Rz", resultingContactDto.getLastName());
+        assertEquals("erikrz@github.com", resultingContactDto.getEmail());
+        assertEquals("(123) 456 7890", resultingContactDto.getPhoneNumber());
+        assertEquals(Instant.parse("2023-03-28T15:00:00.00Z"), contact.getCreatedDate());
+        assertEquals(Instant.parse("2023-03-28T15:01:00.00Z"), contact.getLastModifiedDate());
+    }
+}
+```
+
+### Core AssertJ
+
+```java
+class ContactMapperWithCoreAssertJTest {
+    
+    private final ContactMapper contactMapper = Mappers.getMapper(ContactMapper.class);
+    
+    @Test
+    void toContactDto() {
+        var contact = TestDataFactory.getContact();
+
+        var resultingContactDto = contactMapper.toContactDto(contact);
+
+        assertThat(resultingContactDto.getId()).isEqualTo(1L);
+        assertThat(resultingContactDto.getFirstName()).isEqualTo("Erik");
+        assertThat(resultingContactDto.getLastName()).isEqualTo("Rz");
+        assertThat(resultingContactDto.getEmail()).isEqualTo("erikrz@github.com");
+        assertThat(resultingContactDto.getPhoneNumber()).isEqualTo("(123) 456 7890");
+        assertThat(resultingContactDto.getCreatedDate()).isEqualTo("2023-03-28T15:00:00.00Z");
+        assertThat(resultingContactDto.getLastModifiedDate()).isEqualTo("2023-03-28T15:01:00.00Z");
+    }
+    
+}
+```
+
+### Generated AssertJ
+
+```java
+class ContactMapperWithGeneratedAssertJTest {
+    
+    private final ContactMapper contactMapper = Mappers.getMapper(ContactMapper.class);
+
+    @Test
+    void toContactDto() {
+        var contact = TestDataFactory.getContact();
+
+        var resultingContactDto = contactMapper.toContactDto(contact);
+
+        assertThat(resultingContactDto)
+                .hasId(1L)
+                .hasFirstName("Erik")
+                .hasLastName("Rz")
+                .hasEmail("erikrz@github.com")
+                .hasPhoneNumber("(123) 456 7890")
+                .hasCreatedDate(Instant.parse("2023-03-28T15:00:00.00Z"))
+                .hasLastModifiedDate(Instant.parse("2023-03-28T15:01:00.00Z"));
+    }
+    
+}
+```
 
 ## Local Development
 
@@ -55,6 +130,10 @@ Sample maven command goal runs:
 * `mvn clean test`
 * `mvn clean install`
 * `mvn versions:display-property-updates`
+
+Open [contacts-service-parent](contacts-service-parent) and run `mvn clean install`. This should build the all the necessary artifacts to run and consume this microservice.
+In this sample, we have a RESTFul microservice that accepts JSON payload.
+
 
 ### Starting the Application
 
