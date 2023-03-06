@@ -38,6 +38,7 @@
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
 
+        <commons-logging.version>1.2</commons-logging.version>
     </properties>
 
     <!--Default dependency information for projects that inherit from this one. The dependencies in this section
@@ -80,7 +81,7 @@
             <dependency>
                 <groupId>commons-logging</groupId>
                 <artifactId>commons-logging</artifactId>
-                <version>1.2</version>
+                <version>${commons-logging.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.assertj</groupId>
