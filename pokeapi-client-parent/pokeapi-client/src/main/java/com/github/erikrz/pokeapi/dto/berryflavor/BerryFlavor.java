@@ -20,7 +20,7 @@ public class BerryFlavor implements PokeApiNameResource, Localizable {
 
     private final Integer id;
     private final String name;
-    private final List<FlavorBerryMap> barries;
+    private final List<FlavorBerryMap> berries;
     private final NamedApiResource<ContestType> contestType;
     private final List<Name> names;
 

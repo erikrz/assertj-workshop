@@ -13,9 +13,24 @@ import lombok.extern.jackson.Jacksonized;
 @Builder(toBuilder = true)
 public class NamedApiResourceList<T extends PokeApiNameResource> implements PokeApiNameResource {
 
+    /**
+     * The total number of resources available from this API.
+     */
     private final Integer count;
+
+    /**
+     * The URL for the next page in the list.
+     */
     private final String next;
+
+    /**
+     * The URL for the previous page in the list.
+     */
     private final Boolean previous;
+    
+    /**
+     * A list of named API resources.
+     */
     private final List<NamedApiResource<T>> results;
 
     @Override
