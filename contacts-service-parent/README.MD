@@ -1,6 +1,6 @@
 # Sample Contacts Microservice
 
-In the `/contacts-service-parent` folder, there there is a parent Maven Project, along with 4 childs:
+In the `/contacts-service-parent` folder, there there is a parent Maven Project, along with 4 children:
 
 * [contacts-service-parent](/)
   * [contacts-api](contacts-api)
