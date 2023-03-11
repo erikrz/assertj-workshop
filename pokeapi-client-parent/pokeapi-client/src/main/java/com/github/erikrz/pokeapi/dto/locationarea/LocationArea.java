@@ -17,10 +17,10 @@ import lombok.extern.jackson.Jacksonized;
 @Builder(toBuilder = true)
 public class LocationArea implements PokeApiNameResource, Localizable {
 
-    private final Integer Id;
+    private final Integer id;
     private final String name;
     private final Integer gameIndex;
-    private final List<EncounterMethodRate> encoutnerMethodRates;
+    private final List<EncounterMethodRate> encounterMethodRates;
     private final NamedApiResource<Location> location;
     private final List<Name> names;
     private final List<PokemonEncounter> pokemonEncounters;

@@ -9,7 +9,7 @@ import com.github.erikrz.pokeapi.dto.pokemon.PokemonStat;
 import static com.github.erikrz.pokeapi.dto.NamedApiResourceListAssert.assertThat;
 import static com.github.erikrz.pokeapi.dto.pokemon.PokemonAssert.assertThat;
 
-class PokemonClientGeneratesAssertJTests {
+class PokemonClientGeneratedAssertJTests {
 
     private final PokemonClient pokemonClient = (new PokeApiClientFactory()).buildClient(PokemonClient.class);
 

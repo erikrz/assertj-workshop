@@ -68,6 +68,6 @@ class PokemonClientJunitTests {
                         .stat(new NamedApiResource<>("speed", "https://pokeapi.co/api/v2/stat/6/"))
                         .baseStat(90)
                         .effort(2).build()
-        ));
+        )));
     }
 }
