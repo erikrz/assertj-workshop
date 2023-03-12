@@ -11,7 +11,7 @@ import static com.github.erikrz.pokeapi.dto.berryfirmness.BerryFirmnessAssert.as
 import static com.github.erikrz.pokeapi.dto.berryflavor.BerryFlavorAssert.assertThat;
 
 
-class BerriesClientTest {
+class BerriesClientTests {
 
     private final BerriesClient berriesClient = (new PokeApiClientFactory()).buildClient(BerriesClient.class);
 

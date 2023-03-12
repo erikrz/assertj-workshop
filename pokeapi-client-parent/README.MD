@@ -1,9 +1,87 @@
 # Sample PokeAPI client
 
-## JUnit vs Core AssertJ vs Generated AssertJ 
+## JUnit vs Core AssertJ with common data types
 
-See all these points implemented in 
-* pokeapi-client [test folder](pokeapi-client/src/test/java/com/github/erikrz/pokeapi/client/modules).
+### String
+
+```java
+class StringTests {
+
+  private String pokemonSlogan;
+
+  @BeforeEach
+  public void initialize() {
+    pokemonSlogan = "Gotta Catch 'Em All";
+  }
+
+  @Test
+  void testContainsJunit() {
+    assertTrue(pokemonSlogan.startsWith("Gotta"));
+    assertTrue(pokemonSlogan.contains("Catch"));
+    assertTrue(pokemonSlogan.endsWith("'Em All"));
+  }
+
+  @Test
+  void testContainsAssertJ() {
+    assertThat(pokemonSlogan).startsWith("Gotta").contains("Catch").endsWith("'Em All");
+  }
+}
+```
+
+### List
+
+```java
+class ListTests {
+    
+    private List<Integer> pokemonDollars;
+
+    @BeforeEach
+    public void initialize() {
+        pokemonDollars = List.of(50, 100, 200);
+    }
+
+    @Test
+    void testSizeAndSortingJUnit() {
+        assertEquals(3, pokemonDollars.size());
+        assertEquals(pokemonDollars.stream().sorted().collect(toList()), pokemonDollars);
+    }
+
+    @Test
+    void testSizeAndSortingAssertJ() {
+        assertThat(pokemonDollars).hasSize(3).isSorted();
+    }
+}
+
+```
+
+### Map
+
+```java
+class MapTests {
+
+    private Map<Integer, String> pokemonMap;
+
+    @BeforeEach
+    public void initialize() {
+        pokemonMap = Map.of(25, "Pikachu", 282, "Gardevoir", 778, "Mimikyu");
+    }
+
+    @Test
+    void testValueJunit() {
+      assertEquals("Mimikyu", pokemonMap.get(778));
+    }
+  
+    @Test
+    void testValueAssertJ() {
+      assertThat(pokemonMap).extractingByKey(778).isEqualTo("Mimikyu");
+    }
+
+}
+```
+See all these points (and more) implemented in
+* pokeapi-client [jdk test folder](pokeapi-client/src/test/java/com/github/erikrz/jdk).
+
+## JUnit vs Core AssertJ vs Generated AssertJ with custom data types
 
 ### JUnit
 
@@ -75,6 +153,10 @@ class PokemonClientGeneratedAssertJTests {
     
 }
 ```
+
+See all these points (and more) implemented in
+* pokeapi-client [modules test folder](pokeapi-client/src/test/java/com/github/erikrz/pokeapi/client/modules).
+
 
 ## Local Development
 
