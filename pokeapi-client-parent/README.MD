@@ -9,24 +9,76 @@ See all these points implemented in
 
 ```java
 class StringTests {
-    
-  private String palletTownPostalCode;
+
+  private String pokemonSlogan;
 
   @BeforeEach
   public void initialize() {
-    palletTownPostalCode = "12345";
+    pokemonSlogan = "Gotta Catch 'Em All";
   }
 
   @Test
-  void testPostalCodeJUnit() {
-    assertTrue(palletTownPostalCode.matches("[0-9]+"));
-    assertEquals(5, palletTownPostalCode.length());
+  void testContainsJunit() {
+    assertTrue(pokemonSlogan.startsWith("Gotta"));
+    assertTrue(pokemonSlogan.contains("Catch"));
+    assertTrue(pokemonSlogan.endsWith("'Em All"));
   }
 
   @Test
-  void testPostalCodeAssert() {
-    assertThat(palletTownPostalCode).containsOnlyDigits().hasSize(5);
+  void testContainsAssertJ() {
+    assertThat(pokemonSlogan).startsWith("Gotta").contains("Catch").endsWith("'Em All");
   }
+}
+```
+
+### List
+
+```java
+class ListTests {
+    
+    private List<Integer> pokemonDollars;
+
+    @BeforeEach
+    public void initialize() {
+        pokemonDollars = List.of(50, 100, 200);
+    }
+
+    @Test
+    void testSizeAndSortingJUnit() {
+        assertEquals(3, pokemonDollars.size());
+        assertEquals(pokemonDollars.stream().sorted().collect(toList()), pokemonDollars);
+    }
+
+    @Test
+    void testSizeAndSortingAssertJ() {
+        assertThat(pokemonDollars).hasSize(3).isSorted();
+    }
+}
+
+```
+
+### Map
+
+```java
+class MapTests {
+
+    private Map<Integer, String> pokemonMap;
+
+    @BeforeEach
+    public void initialize() {
+        pokemonMap = Map.of(25, "Pikachu", 282, "Gardevoir", 778, "Mimikyu");
+    }
+
+    @Test
+    void testValueJunit() {
+      assertEquals("Mimikyu", pokemonMap.get(778));
+    }
+  
+    @Test
+    void testValueAssertJ() {
+      assertThat(pokemonMap).extractingByKey(778).isEqualTo("Mimikyu");
+    }
+
 }
 ```
 

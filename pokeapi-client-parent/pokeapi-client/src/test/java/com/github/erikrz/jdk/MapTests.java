@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
- * Sample tests that showcase distinct List testing methods between JUnit & AssertJ.
+ * Sample tests that showcase distinct Map testing methods between JUnit & AssertJ.
  */
 @DisplayName("Map tests")
 class MapTests {
@@ -59,12 +59,12 @@ class MapTests {
     }
 
     @Test
-    void testIsBlankJunit() {
+    void testValueJunit() {
         assertEquals("Mimikyu", pokemonMap.get(778));
     }
 
     @Test
-    void testIsBlankAssertJ() {
+    void testValueAssertJ() {
         assertThat(pokemonMap).extractingByKey(778).isEqualTo("Mimikyu");
     }
 
