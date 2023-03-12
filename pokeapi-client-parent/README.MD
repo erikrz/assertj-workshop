@@ -10,22 +10,22 @@ See all these points implemented in
 ```java
 class StringTests {
     
-  private String mexicanPostalCode;
+  private String palletTownPostalCode;
 
   @BeforeEach
   public void initialize() {
-    mexicanPostalCode = "12345";
+    palletTownPostalCode = "12345";
   }
 
   @Test
   void testPostalCodeJUnit() {
-    assertTrue(mexicanPostalCode.matches("[0-9]+"));
-    assertEquals(5, mexicanPostalCode.length());
+    assertTrue(palletTownPostalCode.matches("[0-9]+"));
+    assertEquals(5, palletTownPostalCode.length());
   }
 
   @Test
   void testPostalCodeAssert() {
-    assertThat(mexicanPostalCode).containsOnlyDigits().hasSize(5);
+    assertThat(palletTownPostalCode).containsOnlyDigits().hasSize(5);
   }
 }
 ```

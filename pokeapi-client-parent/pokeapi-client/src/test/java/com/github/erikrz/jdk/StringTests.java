@@ -16,65 +16,66 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DisplayName("String tests")
 class StringTests {
 
-    private String username;
-    private String mexicanPostalCode;
+    private String pokemonName;
+    private String palletTownPostalCode;
 
     @BeforeEach
     public void initialize() {
-        username = "Luis Erik";
-        mexicanPostalCode = "12345";
+        pokemonName = "Pikachu";
+        palletTownPostalCode = "12345";
     }
 
     @Test
     void testEqualsJunit() {
-        assertEquals("Luis Erik", username);
+        assertEquals("Pikachu", pokemonName);
     }
 
     @Test
     void testEqualsAssertJ() {
-        assertThat(username).isEqualTo("Luis Erik");
+        assertThat(pokemonName).isEqualTo("Pikachu");
     }
 
 
     @Test
     void testEqualsIgnoreCaseJunit() {
-        assertTrue(username.equalsIgnoreCase("luis erik"));
+        assertTrue(pokemonName.equalsIgnoreCase("pikachu"));
     }
 
     @Test
     void testEqualsIgnoreCaseAssertJ() {
-        assertThat(username).isEqualToIgnoringCase("luis erik");
+        assertThat(pokemonName).isEqualToIgnoringCase("pikachu");
     }
 
     @Test
     void testIsBlankJunit() {
-        assertFalse(username.isBlank());
+        assertFalse(pokemonName.isBlank());
     }
 
     @Test
     void testIsBlankAssertJ() {
-        assertThat(username).isNotBlank();
+        assertThat(pokemonName).isNotBlank();
     }
 
     @Test
     void testContainsJunit() {
-        assertTrue(username.contains("Erik"));
-        assertTrue(username.contains("Luis"));
+        assertTrue(pokemonName.contains("Pi"));
+        assertTrue(pokemonName.contains("ka"));
+        assertTrue(pokemonName.contains("chu"));
     }
 
     @Test
     void testContainsAssertJ() {
-        assertThat(username).contains("Erik", "Luis");
+        assertThat(pokemonName).contains("Pi", "ka", "chu");
     }
 
     @Test
     void testPostalCodeJUnit() {
-        assertTrue(mexicanPostalCode.matches("[0-9]+"));
-        assertEquals(5, mexicanPostalCode.length());
+        assertTrue(palletTownPostalCode.matches("[0-9]+"));
+        assertEquals(5, palletTownPostalCode.length());
     }
 
     @Test
     void testPostalCodeAssert() {
-        assertThat(mexicanPostalCode).containsOnlyDigits().hasSize(5);
+        assertThat(palletTownPostalCode).containsOnlyDigits().hasSize(5);
     }
 }
