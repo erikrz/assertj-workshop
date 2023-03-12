@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Sample tests that showcase distinct List testing methods between JUnit & AssertJ.
  */
-@DisplayName("List tests")
+@DisplayName("Map tests")
 class MapTests {
 
     private Map<Integer, String> pokemonMap;
@@ -36,6 +36,16 @@ class MapTests {
     @Test
     void testContainsKeysAssertJ() {
         assertThat(pokemonMap).containsOnlyKeys(25, 282, 778);
+    }
+
+    @Test
+    void testContainsEntryJUnit() {
+        assertTrue(pokeballMap.entrySet().contains(Map.entry("Master Ball", 1)));
+    }
+
+    @Test
+    void testContainsEntryAssertJ() {
+        assertThat(pokeballMap).containsEntry("Master Ball", 1);
     }
 
     @Test
@@ -60,12 +70,13 @@ class MapTests {
 
     @Test
     void testSizeAndSortingJUnit() {
-        assertTrue(pokeballMap.size() >= 1);
-        assertTrue(pokeballMap.size() <= 4);
+        assertTrue(pokemonMap.size() >= 1);
+        assertTrue(pokemonMap.size() <= 4);
     }
 
     @Test
     void testSizeAndSortingAssertJ() {
-        assertThat(pokeballMap).hasSizeBetween(1, 4);
+        assertThat(pokemonMap).hasSizeBetween(1, 4);
     }
+
 }
