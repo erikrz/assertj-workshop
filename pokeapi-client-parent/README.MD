@@ -2,9 +2,6 @@
 
 ## JUnit vs Core AssertJ with common data types
 
-See all these points implemented in
-* pokeapi-client [jdk test folder](pokeapi-client/src/test/java/com/github/erikrz/jdk).
-
 ### String
 
 ```java
@@ -81,11 +78,10 @@ class MapTests {
 
 }
 ```
+See all these points (and more) implemented in
+* pokeapi-client [jdk test folder](pokeapi-client/src/test/java/com/github/erikrz/jdk).
 
 ## JUnit vs Core AssertJ vs Generated AssertJ with custom data types
-
-See all these points implemented in 
-* pokeapi-client [modules test folder](pokeapi-client/src/test/java/com/github/erikrz/pokeapi/client/modules).
 
 ### JUnit
 
@@ -157,6 +153,10 @@ class PokemonClientGeneratedAssertJTests {
     
 }
 ```
+
+See all these points (and more) implemented in
+* pokeapi-client [modules test folder](pokeapi-client/src/test/java/com/github/erikrz/pokeapi/client/modules).
+
 
 ## Local Development
 
