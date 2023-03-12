@@ -19,24 +19,24 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 class ListTests {
 
     private List<String> pokemonList;
-    private List<Integer> pokeballsList;
+    private List<Integer> pokemonDollars;
 
     @BeforeEach
     public void initialize() {
-        pokemonList = List.of("Pikachu", "Mimikyu", "Gardevoir");
-        pokeballsList = List.of(25, 100, 300);
+        pokemonList = List.of("Pikachu", "Gardevoir", "Mimikyu");
+        pokemonDollars = List.of(50, 100, 200);
     }
 
     @Test
     void testEqualsJunit() {
-        assertEquals(List.of("Pikachu", "Mimikyu", "Gardevoir"), pokemonList);
+        assertEquals(List.of("Pikachu", "Gardevoir", "Mimikyu"), pokemonList);
     }
 
     @Test
     void testEqualsAssertJ() {
         assertThat(pokemonList)
-                .isEqualTo(List.of("Pikachu", "Mimikyu", "Gardevoir"))
-                .containsExactly("Pikachu", "Mimikyu", "Gardevoir");
+                .isEqualTo(List.of("Pikachu", "Gardevoir", "Mimikyu"))
+                .containsExactly("Pikachu", "Gardevoir", "Mimikyu");
     }
 
     @Test
@@ -61,12 +61,12 @@ class ListTests {
 
     @Test
     void testSizeAndSortingJUnit() {
-        assertEquals(3, pokeballsList.size());
-        assertEquals(pokeballsList.stream().sorted().collect(toList()), pokeballsList);
+        assertEquals(3, pokemonDollars.size());
+        assertEquals(pokemonDollars.stream().sorted().collect(toList()), pokemonDollars);
     }
 
     @Test
-    void testSizeAndSortingAssert() {
-        assertThat(pokeballsList).hasSize(3).isSorted();
+    void testSizeAndSortingAssertJ() {
+        assertThat(pokemonDollars).hasSize(3).isSorted();
     }
 }

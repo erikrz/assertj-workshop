@@ -17,11 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class StringTests {
 
     private String pokemonName;
+    private String pokemonSlogan;
     private String palletTownPostalCode;
 
     @BeforeEach
     public void initialize() {
         pokemonName = "Pikachu";
+        pokemonSlogan = "Gotta Catch 'Em All";
         palletTownPostalCode = "12345";
     }
 
@@ -58,14 +60,14 @@ class StringTests {
 
     @Test
     void testContainsJunit() {
-        assertTrue(pokemonName.contains("Pi"));
-        assertTrue(pokemonName.contains("ka"));
-        assertTrue(pokemonName.contains("chu"));
+        assertTrue(pokemonSlogan.startsWith("Gotta"));
+        assertTrue(pokemonSlogan.contains("Catch"));
+        assertTrue(pokemonSlogan.endsWith("'Em All"));
     }
 
     @Test
     void testContainsAssertJ() {
-        assertThat(pokemonName).contains("Pi", "ka", "chu");
+        assertThat(pokemonSlogan).startsWith("Gotta").contains("Catch").endsWith("'Em All");
     }
 
     @Test
