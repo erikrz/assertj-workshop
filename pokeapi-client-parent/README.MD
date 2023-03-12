@@ -1,9 +1,39 @@
 # Sample PokeAPI client
 
-## JUnit vs Core AssertJ vs Generated AssertJ 
+## JUnit vs Core AssertJ with common data types
+
+See all these points implemented in
+* pokeapi-client [jdk test folder](pokeapi-client/src/test/java/com/github/erikrz/jdk).
+
+### String
+
+```java
+class StringTests {
+    
+  private String mexicanPostalCode;
+
+  @BeforeEach
+  public void initialize() {
+    mexicanPostalCode = "12345";
+  }
+
+  @Test
+  void testPostalCodeJUnit() {
+    assertTrue(mexicanPostalCode.matches("[0-9]+"));
+    assertEquals(5, mexicanPostalCode.length());
+  }
+
+  @Test
+  void testPostalCodeAssert() {
+    assertThat(mexicanPostalCode).containsOnlyDigits().hasSize(5);
+  }
+}
+```
+
+## JUnit vs Core AssertJ vs Generated AssertJ with custom data types
 
 See all these points implemented in 
-* pokeapi-client [test folder](pokeapi-client/src/test/java/com/github/erikrz/pokeapi/client/modules).
+* pokeapi-client [modules test folder](pokeapi-client/src/test/java/com/github/erikrz/pokeapi/client/modules).
 
 ### JUnit
 
