@@ -62,7 +62,7 @@ class StringTests {
 
     @Test
     void givenThePokemonSlogan_thenItContainsTheCorrectWords_withJunit() {
-        assertTrue(pokemonSlogan.startsWith("Gottaa"), format("'%s' should start with: 'Gotta'", pokemonSlogan));
+        assertTrue(pokemonSlogan.startsWith("Gotta"), format("'%s' should start with: 'Gotta'", pokemonSlogan));
         assertTrue(pokemonSlogan.contains("Catch"), format("'%s' should contain: 'Catch'", pokemonSlogan));
         assertTrue(pokemonSlogan.endsWith("'Em All"), format("'%s' should end with: ''Em All'", pokemonSlogan));
     }
