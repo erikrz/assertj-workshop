@@ -193,3 +193,5 @@ Sample maven command goal runs:
 
 Open [pokeapi-client-parent](/) and run `mvn clean install`. This should build the all the necessary artifacts to run and test this project.
 In this sample, we consume a RESTFul microservice that returns JSON payload.
+
+Pokémon and Pokémon character names are trademarks of Nintendo.
