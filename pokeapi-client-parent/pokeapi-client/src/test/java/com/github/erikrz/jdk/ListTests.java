@@ -46,28 +46,28 @@ class ListTests {
     }
 
     @Test
-    void givenAListOfPokemon_testNotPresent_withAssertJ() {
+    void givenAListOfPokemon_thenItDoesNotContainsRaichu_withAssertJ() {
         assertThat(pokemonList).doesNotContain("Raichu");
     }
 
     @Test
-    void givenAListOfPokemon_testIsBlank_withtJunit() {
+    void givenAListOfPokemon_thenItIsNotEmpty_withtJunit() {
         assertFalse(pokemonList.isEmpty());
     }
 
     @Test
-    void givenAListOfPokemon_testIsBlank_withAssertJ() {
+    void givenAListOfPokemon_thenItIsNotEmpty_withAssertJ() {
         assertThat(pokemonList).isNotEmpty();
     }
 
     @Test
-    void givenAListOfPokemonDollars_testSizeAndSorting_withtJunit() {
+    void givenAListOfPokemonDollars_thenItHasSizeOf3AndIsSorted_withtJunit() {
         assertEquals(3, pokemonDollars.size());
         assertEquals(pokemonDollars.stream().sorted().collect(toList()), pokemonDollars);
     }
 
     @Test
-    void givenAListOfPokemonDollars_testSizeAndSorting_withAssertJ() {
+    void givenAListOfPokemonDollars_henItHasSizeOf3AndIsSorted_withAssertJ() {
         assertThat(pokemonDollars).hasSize(3).isSorted();
     }
 }
