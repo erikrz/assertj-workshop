@@ -9,7 +9,10 @@ import com.github.erikrz.pokeapi.client.PokeApiClientFactory;
 import com.github.erikrz.pokeapi.dto.NamedApiResource;
 import com.github.erikrz.pokeapi.dto.pokemon.PokemonStat;
 
+import feign.FeignException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Pokemon Client Tests with JUnit")
@@ -22,6 +25,17 @@ class PokemonClientJunitTests {
         var pokemonsList = pokemonClient.getPokemons(0, 20);
 
         assertEquals(1281, pokemonsList.getCount());
+    }
+
+    @Test
+    void givenAPokemonClient_whenGettingPokemonNumberMinus1_thenException() {
+        var thrown = assertThrows(FeignException.NotFound.class, () -> pokemonClient.getPokemon(-1),
+                "FeignException.NotFound error was expected");
+
+        assertEquals(
+                "[404 Not Found] during [GET] to [https://pokeapi.co/api/v2/pokemon/-1] [PokemonClient#getPokemon(Integer)]: [Not Found]",
+                thrown.getMessage());
+
     }
 
     @Test

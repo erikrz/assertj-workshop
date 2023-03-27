@@ -7,7 +7,10 @@ import com.github.erikrz.pokeapi.client.PokeApiClientFactory;
 import com.github.erikrz.pokeapi.dto.NamedApiResource;
 import com.github.erikrz.pokeapi.dto.pokemon.PokemonStat;
 
+import feign.FeignException;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 @DisplayName("Pokemon Client Tests with Core AssertJ")
 class PokemonClientCoreAssertjTests {
@@ -19,6 +22,16 @@ class PokemonClientCoreAssertjTests {
         var pokemonsList = pokemonClient.getPokemons(0, 20);
         assertThat(pokemonsList.getCount())
                 .isEqualTo(1281);
+    }
+
+    @Test
+    void givenAPokemonClient_whenGettingPokemonNumberMinus1_thenException() {
+        var throwable = catchThrowable(() -> pokemonClient.getPokemon(-1));
+
+        assertThat(throwable)
+                .isInstanceOf(FeignException.NotFound.class)
+                .hasMessage(
+                        "[404 Not Found] during [GET] to [https://pokeapi.co/api/v2/pokemon/-1] [PokemonClient#getPokemon(Integer)]: [Not Found]");
     }
 
     @Test
