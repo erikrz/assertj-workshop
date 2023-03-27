@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Sample tests that showcase distinct Map testing methods between JUnit & AssertJ.
+ * Modify the data in the {@link #initialize} method to make the test fail, and see their exception output.
  */
 @DisplayName("Map tests")
 class MapTests {

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Sample tests that showcase distinct String testing methods between JUnit & AssertJ.
+ * Modify the data in the {@link #initialize} method to make the test fail, and see their exception output.
  */
 @DisplayName("String tests")
 class StringTests {
@@ -28,56 +30,61 @@ class StringTests {
     }
 
     @Test
-    void testEqualsJunit() {
+    void givenAPokemonName_thenItShouldBeEqualsToPikachu_withJunit() {
         assertEquals("Pikachu", pokemonName);
     }
 
     @Test
-    void testEqualsAssertJ() {
+    void givenAPokemonName_thenItShouldBeEqualsToPikachu_withAssertJ() {
         assertThat(pokemonName).isEqualTo("Pikachu");
     }
 
 
     @Test
-    void testEqualsIgnoreCaseJunit() {
-        assertTrue(pokemonName.equalsIgnoreCase("pikachu"));
+    void givenAPokemonName_thenItShouldBeEqualsToPikachuIgnoringCase_withJunit() {
+        assertTrue(pokemonName.equalsIgnoreCase("pikachu"), "pokemonName should be equal to 'pikachu' ignoring case");
     }
 
     @Test
-    void testEqualsIgnoreCaseAssertJ() {
+    void givenAPokemonName_thenItShouldBeEqualsToPikachuIgnoringCase_withAssertJ() {
         assertThat(pokemonName).isEqualToIgnoringCase("pikachu");
     }
 
     @Test
-    void testIsBlankJunit() {
-        assertFalse(pokemonName.isBlank());
+    void givenAPokemonName_thenItShouldNotBeBlank_withJunit() {
+        assertFalse(pokemonName.isBlank(), "pokemonName should not be blank");
     }
 
     @Test
-    void testIsBlankAssertJ() {
+    void givenAPokemonName_thenItShouldNotBeBlank_withAssertJ() {
         assertThat(pokemonName).isNotBlank();
     }
 
     @Test
-    void testContainsJunit() {
-        assertTrue(pokemonSlogan.startsWith("Gotta"));
-        assertTrue(pokemonSlogan.contains("Catch"));
-        assertTrue(pokemonSlogan.endsWith("'Em All"));
+    void givenThePokemonSlogan_thenItContainsTheCorrectWords_withJunit() {
+        assertTrue(pokemonSlogan.startsWith("Gottaa"), format("'%s' should start with: 'Gotta'", pokemonSlogan));
+        assertTrue(pokemonSlogan.contains("Catch"), format("'%s' should contain: 'Catch'", pokemonSlogan));
+        assertTrue(pokemonSlogan.endsWith("'Em All"), format("'%s' should end with: ''Em All'", pokemonSlogan));
     }
 
     @Test
-    void testContainsAssertJ() {
-        assertThat(pokemonSlogan).startsWith("Gotta").contains("Catch").endsWith("'Em All");
+    void givenThePokemonSlogan_thenItContainsTheCorrectWords_withAssertJ() {
+        assertThat(pokemonSlogan)
+                .startsWith("Gotta")
+                .contains("Catch")
+                .endsWith("'Em All");
     }
 
     @Test
-    void testPostalCodeJUnit() {
-        assertTrue(palletTownPostalCode.matches("[0-9]+"));
-        assertEquals(5, palletTownPostalCode.length());
+    void givenAPostalCode_thenItContainsDigitsOnly_withJunit() {
+        assertTrue(palletTownPostalCode.matches("[0-9]+"),
+                format("'%s' should contain digits only", palletTownPostalCode));
+        assertEquals(5, palletTownPostalCode.length(),
+                format("'%s' should have exactly 5 digits", palletTownPostalCode));
     }
 
     @Test
-    void testPostalCodeAssert() {
+    void givenAPostalCode_thenItContainsDigitsOnly_withAssertJ() {
         assertThat(palletTownPostalCode).containsOnlyDigits().hasSize(5);
     }
 }

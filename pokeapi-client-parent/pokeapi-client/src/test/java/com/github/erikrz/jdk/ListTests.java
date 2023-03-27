@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * Sample tests that showcase distinct List testing methods between JUnit & AssertJ.
+ * Modify the data in the {@link #initialize} method to make the test fail, and see their exception output.
  */
 @DisplayName("List tests")
 class ListTests {
@@ -28,45 +29,45 @@ class ListTests {
     }
 
     @Test
-    void testEqualsJunit() {
+    void givenAListOfPokemon_thenItIsEqualTo_withJunit() {
         assertEquals(List.of("Pikachu", "Gardevoir", "Mimikyu"), pokemonList);
     }
 
     @Test
-    void testEqualsAssertJ() {
+    void givenAListOfPokemon_thenItIsEqualTo_withAssertJ() {
         assertThat(pokemonList)
                 .isEqualTo(List.of("Pikachu", "Gardevoir", "Mimikyu"))
                 .containsExactly("Pikachu", "Gardevoir", "Mimikyu");
     }
 
     @Test
-    void testNotPresentJunit() {
+    void givenAListOfPokemon_thenItDoesNotContainsRaichu_withtJunit() {
         assertFalse(pokemonList.contains("Raichu"));
     }
 
     @Test
-    void testNotPresentAssertJ() {
+    void givenAListOfPokemon_testNotPresent_withAssertJ() {
         assertThat(pokemonList).doesNotContain("Raichu");
     }
 
     @Test
-    void testIsBlankJunit() {
+    void givenAListOfPokemon_testIsBlank_withtJunit() {
         assertFalse(pokemonList.isEmpty());
     }
 
     @Test
-    void testIsBlankAssertJ() {
+    void givenAListOfPokemon_testIsBlank_withAssertJ() {
         assertThat(pokemonList).isNotEmpty();
     }
 
     @Test
-    void testSizeAndSortingJUnit() {
+    void givenAListOfPokemonDollars_testSizeAndSorting_withtJunit() {
         assertEquals(3, pokemonDollars.size());
         assertEquals(pokemonDollars.stream().sorted().collect(toList()), pokemonDollars);
     }
 
     @Test
-    void testSizeAndSortingAssertJ() {
+    void givenAListOfPokemonDollars_testSizeAndSorting_withAssertJ() {
         assertThat(pokemonDollars).hasSize(3).isSorted();
     }
 }
