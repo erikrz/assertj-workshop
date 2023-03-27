@@ -15,14 +15,14 @@ class PokemonClientGeneratedAssertJTests {
 
 
     @Test
-    void testGetPokemonsList() {
+    void givenAPokemonClient_whenGettingPokemons_thenCountIs1281() {
         var pokemonsList = pokemonClient.getPokemons(0, 20);
         assertThat(pokemonsList)
                 .hasCount(1281);
     }
 
     @Test
-    void testGetPokemonByNumber() {
+    void givenAPokemonClient_whenGettingPokemonNumber25_thenExpectPikachu() {
         var pikachu = pokemonClient.getPokemon(25);
         assertThat(pikachu)
                 .hasName("pikachu")
@@ -37,7 +37,7 @@ class PokemonClientGeneratedAssertJTests {
     }
 
     @Test
-    void testGetPokemonByName() {
+    void givenAPokemonClient_whenGettingPokemonNamedPikachu_thenExpectPokemonNumber25() {
         var pikachu = pokemonClient.getPokemon("pikachu");
         assertThat(pikachu)
                 .hasId(25)

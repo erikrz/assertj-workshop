@@ -16,14 +16,14 @@ class PokemonClientJunitTests {
     private final PokemonClient pokemonClient = (new PokeApiClientFactory()).buildClient(PokemonClient.class);
 
     @Test
-    void testGetPokemonsList() {
+    void givenAPokemonClient_whenGettingPokemons_thenCountIs1281() {
         var pokemonsList = pokemonClient.getPokemons(0, 20);
 
         assertEquals(1281, pokemonsList.getCount());
     }
 
     @Test
-    void testGetPokemonByNumber() {
+    void givenAPokemonClient_whenGettingPokemonNumber25_thenExpectPikachu() {
         var pikachu = pokemonClient.getPokemon(25);
 
         assertEquals("pikachu", pikachu.getName());
@@ -37,7 +37,7 @@ class PokemonClientJunitTests {
     }
 
     @Test
-    void testGetPokemonByName() {
+    void givenAPokemonClient_whenGettingPokemonNamedPikachu_thenExpectPokemonNumber25() {
         var pikachu = pokemonClient.getPokemon("pikachu");
 
         assertEquals(25, pikachu.getId());

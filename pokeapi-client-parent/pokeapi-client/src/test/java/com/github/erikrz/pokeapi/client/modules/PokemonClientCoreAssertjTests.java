@@ -13,14 +13,14 @@ class PokemonClientCoreAssertjTests {
     private final PokemonClient pokemonClient = (new PokeApiClientFactory()).buildClient(PokemonClient.class);
 
     @Test
-    void testGetPokemonsList() {
+    void givenAPokemonClient_whenGettingPokemons_thenCountIs1281() {
         var pokemonsList = pokemonClient.getPokemons(0, 20);
         assertThat(pokemonsList.getCount())
                 .isEqualTo(1281);
     }
 
     @Test
-    void testGetPokemonByNumber() {
+    void givenAPokemonClient_whenGettingPokemonNumber25_thenExpectPikachu() {
         var pikachu = pokemonClient.getPokemon(25);
         assertThat(pikachu.getName()).isEqualTo("pikachu");
         assertThat(pikachu.getBaseExperience()).isEqualTo(112);
@@ -33,7 +33,7 @@ class PokemonClientCoreAssertjTests {
     }
 
     @Test
-    void testGetPokemonByName() {
+    void givenAPokemonClient_whenGettingPokemonNamedPikachu_thenExpectPokemonNumber25() {
         var pikachu = pokemonClient.getPokemon("pikachu");
         assertThat(pikachu.getId()).isEqualTo(25);
         assertThat(pikachu.getBaseExperience()).isEqualTo(112);
