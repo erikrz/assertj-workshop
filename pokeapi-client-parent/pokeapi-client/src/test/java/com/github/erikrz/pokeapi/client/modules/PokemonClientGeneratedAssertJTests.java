@@ -1,5 +1,6 @@
 package com.github.erikrz.pokeapi.client.modules;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.github.erikrz.pokeapi.client.PokeApiClientFactory;
@@ -9,6 +10,7 @@ import com.github.erikrz.pokeapi.dto.pokemon.PokemonStat;
 import static com.github.erikrz.pokeapi.dto.NamedApiResourceListAssert.assertThat;
 import static com.github.erikrz.pokeapi.dto.pokemon.PokemonAssert.assertThat;
 
+@DisplayName("Pokemon Client Tests with Generated AssertJ")
 class PokemonClientGeneratedAssertJTests {
 
     private final PokemonClient pokemonClient = (new PokeApiClientFactory()).buildClient(PokemonClient.class);

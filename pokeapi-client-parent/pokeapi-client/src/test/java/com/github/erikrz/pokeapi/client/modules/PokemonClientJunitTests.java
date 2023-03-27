@@ -2,6 +2,7 @@ package com.github.erikrz.pokeapi.client.modules;
 
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.github.erikrz.pokeapi.client.PokeApiClientFactory;
@@ -11,6 +12,7 @@ import com.github.erikrz.pokeapi.dto.pokemon.PokemonStat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@DisplayName("Pokemon Client Tests with JUnit")
 class PokemonClientJunitTests {
 
     private final PokemonClient pokemonClient = (new PokeApiClientFactory()).buildClient(PokemonClient.class);
