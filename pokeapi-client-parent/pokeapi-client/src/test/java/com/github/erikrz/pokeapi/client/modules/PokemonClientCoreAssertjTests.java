@@ -1,26 +1,41 @@
 package com.github.erikrz.pokeapi.client.modules;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.github.erikrz.pokeapi.client.PokeApiClientFactory;
 import com.github.erikrz.pokeapi.dto.NamedApiResource;
 import com.github.erikrz.pokeapi.dto.pokemon.PokemonStat;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import feign.FeignException;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
+
+@DisplayName("Pokemon Client Tests with Core AssertJ")
 class PokemonClientCoreAssertjTests {
 
     private final PokemonClient pokemonClient = (new PokeApiClientFactory()).buildClient(PokemonClient.class);
 
     @Test
-    void testGetPokemonsList() {
+    void givenAPokemonClient_whenGettingPokemons_thenCountIs1281() {
         var pokemonsList = pokemonClient.getPokemons(0, 20);
         assertThat(pokemonsList.getCount())
                 .isEqualTo(1281);
     }
 
     @Test
-    void testGetPokemonByNumber() {
+    void givenAPokemonClient_whenGettingPokemonNumberMinus1_thenException() {
+        var throwable = catchThrowable(() -> pokemonClient.getPokemon(-1));
+
+        assertThat(throwable)
+                .isInstanceOf(FeignException.NotFound.class)
+                .hasMessage(
+                        "[404 Not Found] during [GET] to [https://pokeapi.co/api/v2/pokemon/-1] [PokemonClient#getPokemon(Integer)]: [Not Found]");
+    }
+
+    @Test
+    void givenAPokemonClient_whenGettingPokemonNumber25_thenExpectPikachu() {
         var pikachu = pokemonClient.getPokemon(25);
         assertThat(pikachu.getName()).isEqualTo("pikachu");
         assertThat(pikachu.getBaseExperience()).isEqualTo(112);
@@ -33,7 +48,7 @@ class PokemonClientCoreAssertjTests {
     }
 
     @Test
-    void testGetPokemonByName() {
+    void givenAPokemonClient_whenGettingPokemonNamedPikachu_thenExpectPokemonNumber25() {
         var pikachu = pokemonClient.getPokemon("pikachu");
         assertThat(pikachu.getId()).isEqualTo(25);
         assertThat(pikachu.getBaseExperience()).isEqualTo(112);

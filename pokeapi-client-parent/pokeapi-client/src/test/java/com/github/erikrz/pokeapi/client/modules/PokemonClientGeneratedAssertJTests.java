@@ -1,5 +1,6 @@
 package com.github.erikrz.pokeapi.client.modules;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.github.erikrz.pokeapi.client.PokeApiClientFactory;
@@ -9,20 +10,21 @@ import com.github.erikrz.pokeapi.dto.pokemon.PokemonStat;
 import static com.github.erikrz.pokeapi.dto.NamedApiResourceListAssert.assertThat;
 import static com.github.erikrz.pokeapi.dto.pokemon.PokemonAssert.assertThat;
 
+@DisplayName("Pokemon Client Tests with Generated AssertJ")
 class PokemonClientGeneratedAssertJTests {
 
     private final PokemonClient pokemonClient = (new PokeApiClientFactory()).buildClient(PokemonClient.class);
 
 
     @Test
-    void testGetPokemonsList() {
+    void givenAPokemonClient_whenGettingPokemons_thenCountIs1281() {
         var pokemonsList = pokemonClient.getPokemons(0, 20);
         assertThat(pokemonsList)
                 .hasCount(1281);
     }
 
     @Test
-    void testGetPokemonByNumber() {
+    void givenAPokemonClient_whenGettingPokemonNumber25_thenExpectPikachu() {
         var pikachu = pokemonClient.getPokemon(25);
         assertThat(pikachu)
                 .hasName("pikachu")
@@ -37,7 +39,7 @@ class PokemonClientGeneratedAssertJTests {
     }
 
     @Test
-    void testGetPokemonByName() {
+    void givenAPokemonClient_whenGettingPokemonNamedPikachu_thenExpectPokemonNumber25() {
         var pikachu = pokemonClient.getPokemon("pikachu");
         assertThat(pikachu)
                 .hasId(25)

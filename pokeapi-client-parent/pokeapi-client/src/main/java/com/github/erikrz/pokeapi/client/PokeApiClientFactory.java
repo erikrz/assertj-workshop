@@ -65,7 +65,7 @@ public class PokeApiClientFactory {
                 .client(client)
                 .logger(new Slf4jLogger())
                 .logLevel(level)
-                .dismiss404()
+                //.dismiss404() I prefer to dismiss 404, but left commented for exception testing purposes.
                 .encoder(new JacksonEncoder(objectMapper))
                 .decoder(new JacksonDecoder(objectMapper));
     }

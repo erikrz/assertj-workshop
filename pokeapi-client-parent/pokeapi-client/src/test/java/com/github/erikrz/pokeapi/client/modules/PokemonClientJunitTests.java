@@ -2,28 +2,44 @@ package com.github.erikrz.pokeapi.client.modules;
 
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.github.erikrz.pokeapi.client.PokeApiClientFactory;
 import com.github.erikrz.pokeapi.dto.NamedApiResource;
 import com.github.erikrz.pokeapi.dto.pokemon.PokemonStat;
 
+import feign.FeignException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@DisplayName("Pokemon Client Tests with JUnit")
 class PokemonClientJunitTests {
 
     private final PokemonClient pokemonClient = (new PokeApiClientFactory()).buildClient(PokemonClient.class);
 
     @Test
-    void testGetPokemonsList() {
+    void givenAPokemonClient_whenGettingPokemons_thenCountIs1281() {
         var pokemonsList = pokemonClient.getPokemons(0, 20);
 
         assertEquals(1281, pokemonsList.getCount());
     }
 
     @Test
-    void testGetPokemonByNumber() {
+    void givenAPokemonClient_whenGettingPokemonNumberMinus1_thenException() {
+        var thrown = assertThrows(FeignException.NotFound.class, () -> pokemonClient.getPokemon(-1),
+                "FeignException.NotFound error was expected");
+
+        assertEquals(
+                "[404 Not Found] during [GET] to [https://pokeapi.co/api/v2/pokemon/-1] [PokemonClient#getPokemon(Integer)]: [Not Found]",
+                thrown.getMessage());
+
+    }
+
+    @Test
+    void givenAPokemonClient_whenGettingPokemonNumber25_thenExpectPikachu() {
         var pikachu = pokemonClient.getPokemon(25);
 
         assertEquals("pikachu", pikachu.getName());
@@ -37,7 +53,7 @@ class PokemonClientJunitTests {
     }
 
     @Test
-    void testGetPokemonByName() {
+    void givenAPokemonClient_whenGettingPokemonNamedPikachu_thenExpectPokemonNumber25() {
         var pikachu = pokemonClient.getPokemon("pikachu");
 
         assertEquals(25, pikachu.getId());
