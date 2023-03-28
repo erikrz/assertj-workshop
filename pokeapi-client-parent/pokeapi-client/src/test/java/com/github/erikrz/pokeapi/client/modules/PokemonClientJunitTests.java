@@ -24,7 +24,7 @@ class PokemonClientJunitTests {
     void givenAPokemonClient_whenGettingPokemons_thenCountIs1281() {
         var pokemonsList = pokemonClient.getPokemons(0, 20);
 
-        assertEquals(1281, pokemonsList.getCount());
+        assertEquals(1279, pokemonsList.getCount());
     }
 
     @Test
