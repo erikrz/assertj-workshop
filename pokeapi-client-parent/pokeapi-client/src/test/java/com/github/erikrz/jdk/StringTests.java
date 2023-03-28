@@ -24,30 +24,31 @@ class StringTests {
 
     @BeforeEach
     public void initialize() {
-        pokemonName = "Pikachu";
+        pokemonName = "Teddiursa";
         pokemonSlogan = "Gotta Catch 'Em All";
         palletTownPostalCode = "12345";
     }
 
     @Test
-    void givenAPokemonName_thenItShouldBeEqualsToPikachu_withJunit() {
-        assertEquals("Pikachu", pokemonName);
+    void givenAPokemonName_thenItShouldBeEqualsToTeddiursa_withJunit() {
+        assertEquals("Teddiursa", pokemonName);
     }
 
     @Test
-    void givenAPokemonName_thenItShouldBeEqualsToPikachu_withAssertJ() {
-        assertThat(pokemonName).isEqualTo("Pikachu");
+    void givenAPokemonName_thenItShouldBeEqualsToTeddiursa_withAssertJ() {
+        assertThat(pokemonName).isEqualTo("Teddiursa");
     }
 
 
     @Test
-    void givenAPokemonName_thenItShouldBeEqualsToPikachuIgnoringCase_withJunit() {
-        assertTrue(pokemonName.equalsIgnoreCase("pikachu"), "pokemonName should be equal to 'pikachu' ignoring case");
+    void givenAPokemonName_thenItShouldBeEqualsToTeddiursaIgnoringCase_withJunit() {
+        assertTrue(pokemonName.equalsIgnoreCase("teddiursa"),
+                "pokemonName should be equal to 'teddiursa' ignoring case");
     }
 
     @Test
-    void givenAPokemonName_thenItShouldBeEqualsToPikachuIgnoringCase_withAssertJ() {
-        assertThat(pokemonName).isEqualToIgnoringCase("pikachu");
+    void givenAPokemonName_thenItShouldBeEqualsToTeddiursaIgnoringCase_withAssertJ() {
+        assertThat(pokemonName).isEqualToIgnoringCase("teddiursa");
     }
 
     @Test
