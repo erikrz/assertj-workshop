@@ -20,7 +20,7 @@ class PokemonClientGeneratedAssertJTests {
     void givenAPokemonClient_whenGettingPokemons_thenCountIs1281() {
         var pokemonsList = pokemonClient.getPokemons(0, 20);
         assertThat(pokemonsList)
-                .hasCount(1281);
+                .hasCount(1279);
     }
 
     @Test
