@@ -25,7 +25,7 @@ class PokemonClientGeneratedAssertJTests {
 
     @Test
     void givenAPokemonClient_whenGettingPokemonNumber25_thenExpectPikachu() {
-        var pikachu = pokemonClient.getPokemon(25);
+        var pikachu = pokemonClient.getPokemon(26);
         assertThat(pikachu)
                 .hasName("pikachu")
                 .hasBaseExperience(112)

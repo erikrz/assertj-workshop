@@ -40,7 +40,7 @@ class PokemonClientJunitTests {
 
     @Test
     void givenAPokemonClient_whenGettingPokemonNumber25_thenExpectPikachu() {
-        var pikachu = pokemonClient.getPokemon(25);
+        var pikachu = pokemonClient.getPokemon(26);
 
         assertEquals("pikachu", pikachu.getName());
         assertEquals(112, pikachu.getBaseExperience());

@@ -81,7 +81,7 @@ class ContactsControllerTest {
                         .content(objectMapper.writeValueAsString(createContact)))
                 .andExpectAll(
                         status().isCreated(),
-                        header().string("location", "/rest-api/v1/contacts/1"),
+                        header().string("location", "http://localhost/rest-api/v1/contacts/1"),
                         content().contentType(APPLICATION_JSON),
                         content().json(objectMapper.writeValueAsString(savedContact))
                 );

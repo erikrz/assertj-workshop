@@ -23,11 +23,12 @@
         <java.version>17</java.version>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.source>17</maven.compiler.source>
-        <spring-boot.version>2.7.9</spring-boot.version>
-        <mapstruct.version>1.5.3.Final</mapstruct.version>
+        <spring-boot.version>2.7.10</spring-boot.version>
+        <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok.version>1.18.22</lombok.version>
         <springdoc-openapi-ui.version>1.6.14</springdoc-openapi-ui.version>
-        <swagger-annotations.version>2.2.8</swagger-annotations.version>
+        <swagger-annotations.version>2.2.9</swagger-annotations.version>
         <assertj.version>3.24.2</assertj.version>
 
         <assertj-assertions-generator.version>2.2.1</assertj-assertions-generator.version>
@@ -37,7 +38,7 @@
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-versions-plugin.version>2.15.0</maven-versions-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
     </properties>
 
     <!--Default dependency information for projects that inherit from this one. The dependencies in this section
@@ -82,7 +83,11 @@
                 <artifactId>assertj-core</artifactId>
                 <version>${assertj.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.openapitools</groupId>
+                <artifactId>jackson-databind-nullable</artifactId>
+                <version>${jackson-databind-nullable.version}</version>
+            </dependency>
             <!--Our own child modules dependencies, so that brother modules can reference them easily.-->
             <dependency>
                 <groupId>com.github.erikrz</groupId>

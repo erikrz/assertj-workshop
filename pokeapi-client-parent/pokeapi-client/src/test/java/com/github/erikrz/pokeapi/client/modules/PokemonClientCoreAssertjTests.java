@@ -36,7 +36,7 @@ class PokemonClientCoreAssertjTests {
 
     @Test
     void givenAPokemonClient_whenGettingPokemonNumber25_thenExpectPikachu() {
-        var pikachu = pokemonClient.getPokemon(25);
+        var pikachu = pokemonClient.getPokemon(26);
         assertThat(pikachu.getName()).isEqualTo("pikachu");
         assertThat(pikachu.getBaseExperience()).isEqualTo(112);
         assertThat(pikachu.getWeight()).isEqualTo(60);
