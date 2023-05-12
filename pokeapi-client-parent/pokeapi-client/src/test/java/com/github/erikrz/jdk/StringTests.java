@@ -25,7 +25,7 @@ class StringTests {
     @BeforeEach
     public void initialize() {
         pokemonName = "Teddiursa";
-        pokemonSlogan = "Gotta Catch them All";
+        pokemonSlogan = "Gotta Catch 'Em All";
         palletTownPostalCode = "12345";
     }
 
