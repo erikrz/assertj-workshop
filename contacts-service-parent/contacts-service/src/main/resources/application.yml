@@ -1,7 +1,9 @@
 #Define your application port here
 server:
   port: 8080
-  error.include-message: always
+  error:
+    include-message: always
+    include-binding-errors: always
 spring:
   datasource:
     url: jdbc:h2:mem:contactsDb
