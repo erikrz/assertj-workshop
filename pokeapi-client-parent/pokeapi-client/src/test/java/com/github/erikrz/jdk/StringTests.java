@@ -86,6 +86,8 @@ class StringTests {
 
     @Test
     void givenAPostalCode_thenItContainsDigitsOnly_withAssertJ() {
-        assertThat(palletTownPostalCode).containsOnlyDigits().hasSize(5);
+        assertThat(palletTownPostalCode)
+                .containsOnlyDigits()
+                .hasSize(5);
     }
 }

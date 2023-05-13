@@ -8,14 +8,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.erikrz.contacts.api.dto.request.CreateContactDto;
 import com.github.erikrz.contacts.api.dto.response.ContactDto;
 import com.github.erikrz.contacts.service.service.ContactsService;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -81,9 +84,21 @@ class ContactsControllerTest {
                         .content(objectMapper.writeValueAsString(createContact)))
                 .andExpectAll(
                         status().isCreated(),
-                        header().string("location", "/rest-api/v1/contacts/1"),
+                        header().string("location", "http://localhost/rest-api/v1/contacts/1"),
                         content().contentType(APPLICATION_JSON),
                         content().json(objectMapper.writeValueAsString(savedContact))
+                );
+    }
+
+    @Test
+    void whenNonParseableInputForCreateContact_thenReturns400() throws Exception {
+        mockMvc.perform(post("/rest-api/v1/contacts")
+                        .contentType(APPLICATION_JSON)
+                        .content("[{}]"))
+                .andExpectAll(
+                        status().isBadRequest(),
+                        result -> assertThat(result.getResolvedException())
+                                .isInstanceOf(HttpMessageNotReadableException.class)
                 );
     }
 
@@ -91,8 +106,19 @@ class ContactsControllerTest {
     void whenInvalidInputForCreateContact_thenReturns400() throws Exception {
         mockMvc.perform(post("/rest-api/v1/contacts")
                         .contentType(APPLICATION_JSON)
-                        .content("[{}]"))
-                .andExpect(status().isBadRequest());
+                        .content("""
+                                    {
+                                      "firstName": " ",
+                                      "lastName": " ",
+                                      "email": "john.doe @ github.com",
+                                      "phoneNumber": " "
+                                    }
+                                """))
+                .andExpectAll(
+                        status().isBadRequest(),
+                        result -> assertThat(result.getResolvedException())
+                                .isInstanceOf(MethodArgumentNotValidException.class)
+                );
     }
 
     @Test
@@ -171,7 +197,7 @@ class ContactsControllerTest {
 
         mockMvc.perform(put("/rest-api/v1/contacts/{id}", 2L)
                         .contentType(APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(updateContact)))
+                        .content(objectMapper.writeValueAsString(updateContact)))
                 .andExpect(status().isNotFound());
     }
 

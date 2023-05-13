@@ -1,14 +1,11 @@
 package com.github.erikrz.contacts.service.controller;
 
-import java.net.URI;
 import java.util.List;
+import java.util.Optional;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
-import org.springframework.boot.web.servlet.error.ErrorAttributes;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,24 +13,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.github.erikrz.contacts.api.contract.ContactsIdempotentOperations;
+import com.github.erikrz.contacts.api.contract.ContactsNonIdempotentOperations;
 import com.github.erikrz.contacts.api.dto.request.CreateContactDto;
 import com.github.erikrz.contacts.api.dto.response.ContactDto;
 import com.github.erikrz.contacts.service.service.ContactsService;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.headers.Header;
-import io.swagger.v3.oas.annotations.links.Link;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.github.erikrz.contacts.api.contract.ContactsPaths.BASE_PATH;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
+
 @Slf4j
-@Controller
-@RequestMapping(value = "rest-api/v1")
-public class ContactsController {
+@RestController
+@RequestMapping(value = BASE_PATH)
+public class ContactsController implements ContactsIdempotentOperations, ContactsNonIdempotentOperations {
 
     private final ContactsService contactsService;
 
@@ -42,84 +42,81 @@ public class ContactsController {
         this.contactsService = contactsService;
     }
 
-    @Operation(summary = "POST to create a single contact", operationId = "createContact")
-    @ApiResponse(responseCode = "201", headers = {
-            @Header(name = "location", description = "resource path where the created contact can be found")},
-            links = {@Link(operationId = "getContactById")})
-    @ApiResponse(responseCode = "400", content = @Content(
-            schema = @Schema(implementation = ErrorAttributes.class, subTypes = DefaultErrorAttributes.class,
-                    example = """
-                            {
-                                "timestamp": 1665764391370,
-                                "status": 400,
-                                "error": "Bad Request",
-                                "message": "JSON parse error",
-                                "path": "/rest-api/v1/contacts"
-                            }
-                              """)))
-    @PostMapping(value = "/contacts", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ContactDto> createContact(@RequestBody CreateContactDto contact) {
-        log.trace("contact({})", contact);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    public ContactDto createContact(@RequestBody CreateContactDto contact) {
+        log.trace("createContact({})", contact);
         var savedContact = this.contactsService.saveContact(contact);
-        var location = URI.create(String.format("/rest-api/v1/contacts/%d", savedContact.getId()));
-        return ResponseEntity.created(location)
-                .body(savedContact);
+        getThreadLocalResponse()
+                .ifPresent(httpServletResponse -> httpServletResponse.setHeader(
+                        "location",
+                        fromCurrentRequest().build().toUri() + "/" + savedContact.getId()));
+        log.trace("createdContact: {}", savedContact);
+        return savedContact;
     }
 
-    @Operation(summary = "GET all contacts", operationId = "getContacts")
-    @ApiResponse(responseCode = "200")
-    @GetMapping(value = "/contacts", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ContactDto>> getContacts() {
-        var contacts = this.contactsService.getContacts();
-        return ResponseEntity.ok(contacts);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public List<ContactDto> getAllContacts() {
+        return this.contactsService.getContacts();
     }
 
-    @Operation(summary = "GET a single contact", operationId = "getContactById")
-    @ApiResponse(responseCode = "200")
-    @ApiResponse(responseCode = "400")
-    @ApiResponse(responseCode = "404")
-    @GetMapping(value = "/contacts/{contactId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ContactDto> getContactById(
-            @Parameter(description = "Contact Id", example = "1")
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/{contactId}")
+    public ContactDto getContact(
             @PathVariable("contactId")
             Long contactId) {
         var contact = this.contactsService.getContactById(contactId);
-        if (contact.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(contact.get());
+        return contact.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @Operation(summary = "Update a single contact", operationId = "updateContactById")
-    @ApiResponse(responseCode = "200")
-    @ApiResponse(responseCode = "400")
-    @ApiResponse(responseCode = "404")
-    @PutMapping(value = "/contacts/{contactId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ContactDto> updateContactById(
-            @Parameter(description = "Contact Id", example = "1")
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping(value = "/{contactId}")
+    public ContactDto updateContact(
             @PathVariable("contactId")
             Long contactId,
-            @RequestBody CreateContactDto updatedContact) {
+            @RequestBody
+            CreateContactDto updatedContact) {
         var contact = this.contactsService.updateContactById(contactId, updatedContact);
-        if (contact.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(contact.get());
+        return contact.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @Operation(summary = "Delete a single contact", operationId = "deleteContactById")
-    @ApiResponse(responseCode = "204")
-    @ApiResponse(responseCode = "404")
-    @DeleteMapping(value = "/contacts/{contactId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> deleteContactById(
-            @Parameter(description = "Contact Id", example = "1")
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping(value = "/{contactId}")
+    public void deleteContact(
             @PathVariable("contactId")
             Long contactId) {
         var contact = this.contactsService.deleteContactById(contactId);
         if (contact.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.noContent().build();
+    }
+
+    public static Optional<HttpServletResponse> getThreadLocalResponse() {
+        return Optional.ofNullable(RequestContextHolder.getRequestAttributes())
+                .filter(ServletRequestAttributes.class::isInstance)
+                .map(ServletRequestAttributes.class::cast)
+                .map(ServletRequestAttributes::getResponse);
     }
 
 }
