@@ -66,7 +66,7 @@
         <!--Swagger dependencies-->
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
         <!-- Module that generates metadata from our @ConfigurationProperties classes, so that our IDE can recognize
          which properties are available to configure in our application.yml file. -->
@@ -75,7 +75,10 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+        </dependency>
         <!-- JUnit-Test-Framework -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>

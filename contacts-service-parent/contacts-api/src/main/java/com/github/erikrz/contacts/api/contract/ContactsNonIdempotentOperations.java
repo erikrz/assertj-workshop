@@ -1,6 +1,6 @@
 package com.github.erikrz.contacts.api.contract;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import com.github.erikrz.contacts.api.dto.ExceptionMessage;
 import com.github.erikrz.contacts.api.dto.request.CreateContactDto;

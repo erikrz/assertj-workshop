@@ -1,6 +1,6 @@
 package com.github.erikrz.contacts.service.configuration;
 
-import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -61,7 +61,7 @@ public class SwaggerConfiguration {
                 .packagesToScan(getBasePackage())
                 .group("contacts")
                 .pathsToMatch("/rest-api/**")
-                .addOpenApiCustomiser(openApi -> openApi.setInfo(getApiInfo()))
+                .addOpenApiCustomizer(openApi -> openApi.setInfo(getApiInfo()))
                 .build();
     }
 
