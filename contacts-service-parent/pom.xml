@@ -23,22 +23,23 @@
         <java.version>17</java.version>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.source>17</maven.compiler.source>
-        <spring-boot.version>2.7.10</spring-boot.version>
+        <spring-boot.version>3.1.0</spring-boot.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok.version>1.18.22</lombok.version>
-        <springdoc-openapi-ui.version>1.6.14</springdoc-openapi-ui.version>
-        <swagger-annotations.version>2.2.9</swagger-annotations.version>
+        <springdoc-openapi-starter-webmvc-ui.version>2.1.0</springdoc-openapi-starter-webmvc-ui.version>
+        <swagger-annotations.version>2.2.11</swagger-annotations.version>
         <assertj.version>3.24.2</assertj.version>
+        <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
 
         <assertj-assertions-generator.version>2.2.1</assertj-assertions-generator.version>
         <assertj-assertions-generator-maven-plugin.version>2.2.0</assertj-assertions-generator-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
-        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-versions-plugin.version>2.15.0</maven-versions-plugin.version>
-        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
+        <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
+        <maven-surefire-plugin.version>3.1.0</maven-surefire-plugin.version>
     </properties>
 
     <!--Default dependency information for projects that inherit from this one. The dependencies in this section
@@ -65,7 +66,7 @@
             </dependency>
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
-                <artifactId>swagger-annotations</artifactId>
+                <artifactId>swagger-annotations-jakarta</artifactId>
                 <version>${swagger-annotations.version}</version>
             </dependency>
             <dependency>
@@ -75,8 +76,8 @@
             </dependency>
             <dependency>
                 <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-ui</artifactId>
-                <version>${springdoc-openapi-ui.version}</version>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.assertj</groupId>
@@ -87,6 +88,11 @@
                 <groupId>org.openapitools</groupId>
                 <artifactId>jackson-databind-nullable</artifactId>
                 <version>${jackson-databind-nullable.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.annotation</groupId>
+                <artifactId>javax.annotation-api</artifactId>
+                <version>${javax.annotation-api.version}</version>
             </dependency>
             <!--Our own child modules dependencies, so that brother modules can reference them easily.-->
             <dependency>

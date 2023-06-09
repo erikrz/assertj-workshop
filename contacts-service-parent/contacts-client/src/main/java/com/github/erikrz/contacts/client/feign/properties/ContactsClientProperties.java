@@ -2,8 +2,8 @@
 package com.github.erikrz.contacts.client.feign.properties;
 
 import java.time.Duration;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
@@ -18,7 +18,6 @@ import static feign.Logger.Level.BASIC;
  * {@code application.yml} file, or read from a Spring configuration Server.
  */
 @Data
-@ConstructorBinding
 @ConfigurationProperties(prefix = ContactsClientProperties.PREFIX)
 public class ContactsClientProperties {
 
@@ -63,4 +62,14 @@ public class ContactsClientProperties {
      */
     private final Logger.Level loggerLevel;
 
+    @ConstructorBinding
+    public ContactsClientProperties(@NotNull @NotBlank String baseUri, Duration connectionTimeout, Duration readTimeout,
+                                    Integer maxConnTotal, Integer maxConnPerRoute, Logger.Level loggerLevel) {
+        this.baseUri = baseUri;
+        this.connectionTimeout = connectionTimeout;
+        this.readTimeout = readTimeout;
+        this.maxConnTotal = maxConnTotal;
+        this.maxConnPerRoute = maxConnPerRoute;
+        this.loggerLevel = loggerLevel;
+    }
 }
