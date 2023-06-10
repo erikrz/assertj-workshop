@@ -13,7 +13,7 @@ import com.github.erikrz.contacts.client.feign.targets.ContactsNonIdempotentClie
 
 /**
  * Contacts Service Client Configuration.
- * Spring Configuration class that configures and instances the Calendar Orchestration Service Client.
+ * Spring Configuration class that configures and instances the Contacts Service Client.
  * Just {@code @import} this configuration class into your application, provide the required properties defined in
  * {@link ContactsClientProperties} and you are good to go and use the client.
  */
@@ -28,12 +28,12 @@ public class ContactsServiceClientConfiguration {
     }
 
     @Bean("contactsIdempotentClient")
-    public ContactsIdempotentClient calendarIdempotentClient() {
+    public ContactsIdempotentClient contactsIdempotentClient() {
         return factory.contactsIdempotentClient();
     }
 
     @Bean("contactsNonIdempotentClient")
-    public ContactsNonIdempotentClient calendarNonIdempotentClient() {
+    public ContactsNonIdempotentClient contactsNonIdempotentClient() {
         return factory.contactsNonIdempotentClient();
     }
 

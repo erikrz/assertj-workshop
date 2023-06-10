@@ -9,7 +9,6 @@ import com.github.erikrz.contacts.service.model.Contact;
 
 @Mapper
 public interface ContactMapper {
-
     Contact toContact(CreateContactDto contact);
 
     Contact toContact(ContactDto contact);
@@ -17,5 +16,4 @@ public interface ContactMapper {
     ContactDto toContactDto(Contact contact);
 
     void updateFromCreateContactDto(CreateContactDto contactDto, @MappingTarget Contact contact);
-
 }

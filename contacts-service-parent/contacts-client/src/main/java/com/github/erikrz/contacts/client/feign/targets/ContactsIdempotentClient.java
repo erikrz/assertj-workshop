@@ -10,6 +10,7 @@ import feign.Body;
 import feign.Param;
 import feign.RequestLine;
 
+import static com.github.erikrz.contacts.api.contract.ContactsPaths.ALL_CONTACTS_PATH;
 import static com.github.erikrz.contacts.api.contract.ContactsPaths.BASE_PATH;
 import static com.github.erikrz.contacts.api.contract.ContactsPaths.SINGLE_CONTACT_PATH;
 
@@ -26,7 +27,7 @@ public interface ContactsIdempotentClient extends ContactsIdempotentOperations {
      * @return a list containing all the contacts.
      */
     @Override
-    @RequestLine("GET " + BASE_PATH)
+    @RequestLine("GET " + ALL_CONTACTS_PATH)
     List<ContactDto> getAllContacts();
 
     /**

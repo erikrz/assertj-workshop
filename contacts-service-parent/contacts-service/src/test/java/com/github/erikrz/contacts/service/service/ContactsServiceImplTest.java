@@ -4,12 +4,11 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.github.erikrz.contacts.api.dto.request.CreateContactDto;
@@ -30,8 +29,7 @@ import static org.mockito.Mockito.when;
  * Tests that verifies the ContactsService behavior.
  */
 @ExtendWith(SpringExtension.class)
-@Import(ContactsService.class)
-class ContactsServiceTest {
+class ContactsServiceImplTest {
 
     private final ContactMapper contactMapper = Mappers.getMapper(ContactMapper.class);
     private final ContactDto savedContact = ContactDto.builder()
@@ -49,18 +47,16 @@ class ContactsServiceTest {
             .email("erik.rz@github.com")
             .phoneNumber("(123) 456 7890")
             .build();
-    ;
-    private final ContactDto updatedContactDto = ContactDto.builder()
-            .id(1L)
-            .firstName("Erik")
-            .lastName("Rz")
-            .email("erik.rz@github.com")
-            .phoneNumber("(123) 456 7890")
-            .build();
-    @MockBean
+
+    @Mock
     private ContactsRepository contactsRepository;
-    @Autowired
+
     private ContactsService contactsService;
+
+    @BeforeEach
+    public void initialize() {
+        contactsService = new ContactsServiceImpl(contactsRepository, contactMapper);
+    }
 
     @Test
     void whenSaveContact_thenReturnsValidSavedContact() {
@@ -81,7 +77,7 @@ class ContactsServiceTest {
         when(contactsRepository.findAll())
                 .thenReturn(List.of(contactMapper.toContact(savedContact)));
 
-        var result = contactsService.getContacts();
+        var result = contactsService.getAllContacts();
 
         assertThat(result)
                 .isNotNull()

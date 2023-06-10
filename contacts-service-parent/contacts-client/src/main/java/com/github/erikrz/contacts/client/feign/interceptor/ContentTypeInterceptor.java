@@ -4,7 +4,7 @@ import feign.RequestInterceptor;
 import feign.RequestTemplate;
 
 /**
- * NextivaRequestContextHeaderInterceptor.
+ * ContentTypeInterceptor.
  */
 public class ContentTypeInterceptor implements RequestInterceptor {
 
