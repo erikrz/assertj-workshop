@@ -29,7 +29,7 @@ public class ContactsClientProperties {
     public static final Logger.Level DEFAULT_LOGGER_LEVEL = BASIC;
 
     /**
-     * Base URI to consume Calendar Orchestration Service, i.e.
+     * Base URI to consume Contacts Service, i.e.
      * {@literal https://localhost:8080} .
      */
     @NotNull

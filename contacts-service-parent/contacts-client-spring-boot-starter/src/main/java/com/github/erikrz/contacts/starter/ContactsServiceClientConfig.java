@@ -1,7 +1,6 @@
 package com.github.erikrz.contacts.starter;
 
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import com.github.erikrz.contacts.client.feign.configuration.ContactsServiceClientConfiguration;

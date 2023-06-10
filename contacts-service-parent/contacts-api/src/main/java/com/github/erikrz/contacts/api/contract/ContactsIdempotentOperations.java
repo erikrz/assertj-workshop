@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 public interface ContactsIdempotentOperations {
 
     /**
-     * GET all contacts by invoking GET {@value ContactsPaths#BASE_PATH} .
+     * GET all contacts by invoking GET {@value ContactsPaths#ALL_CONTACTS_PATH} .
      *
      * @return the created contact.
      */

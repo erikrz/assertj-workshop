@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.MockBeans;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.erikrz.contacts.api.dto.request.CreateContactDto;
 import com.github.erikrz.contacts.api.dto.response.ContactDto;
+import com.github.erikrz.contacts.service.mapper.ContactMasker;
 import com.github.erikrz.contacts.service.service.ContactsService;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,9 +34,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Tests that verifies the ContactsController behavior.
  */
+@MockBeans(@MockBean(ContactMasker.class))
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = ContactsController.class)
 class ContactsControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -122,10 +126,10 @@ class ContactsControllerTest {
     }
 
     @Test
-    void whenGetContacts_thenReturns200() throws Exception {
-        when(contactsService.getContacts()).thenReturn(List.of(savedContact));
+    void whenGetAllContacts_thenReturns200() throws Exception {
+        when(contactsService.getAllContacts()).thenReturn(List.of(savedContact));
 
-        mockMvc.perform(get("/rest-api/v1/contacts"))
+        mockMvc.perform(get("/rest-api/v1/contacts/all"))
                 .andExpectAll(
                         status().isOk(),
                         content().contentType(APPLICATION_JSON),

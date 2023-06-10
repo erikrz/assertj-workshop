@@ -2,7 +2,6 @@ package com.github.erikrz.contacts.service.controller;
 
 import java.util.List;
 import java.util.Optional;
-import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +22,10 @@ import com.github.erikrz.contacts.api.contract.ContactsIdempotentOperations;
 import com.github.erikrz.contacts.api.contract.ContactsNonIdempotentOperations;
 import com.github.erikrz.contacts.api.dto.request.CreateContactDto;
 import com.github.erikrz.contacts.api.dto.response.ContactDto;
+import com.github.erikrz.contacts.service.mapper.ContactMasker;
 import com.github.erikrz.contacts.service.service.ContactsService;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.github.erikrz.contacts.api.contract.ContactsPaths.BASE_PATH;
@@ -36,10 +37,12 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 public class ContactsController implements ContactsIdempotentOperations, ContactsNonIdempotentOperations {
 
     private final ContactsService contactsService;
+    private final ContactMasker contactMasker;
 
     @Autowired
-    public ContactsController(ContactsService contactsService) {
+    public ContactsController(ContactsService contactsService, ContactMasker contactMasker) {
         this.contactsService = contactsService;
+        this.contactMasker = contactMasker;
     }
 
     /**
@@ -51,11 +54,9 @@ public class ContactsController implements ContactsIdempotentOperations, Contact
     public ContactDto createContact(@RequestBody CreateContactDto contact) {
         log.trace("createContact({})", contact);
         var savedContact = this.contactsService.saveContact(contact);
-        getThreadLocalResponse()
-                .ifPresent(httpServletResponse -> httpServletResponse.setHeader(
-                        "location",
-                        fromCurrentRequest().build().toUri() + "/" + savedContact.getId()));
-        log.trace("createdContact: {}", savedContact);
+        var savedContactLocation = fromCurrentRequest().build().toUri() + "/" + savedContact.getId();
+        getThreadLocalResponse().ifPresent(response -> response.setHeader("location", savedContactLocation));
+        log.trace("createdContact: {}", contactMasker.mask(savedContact));
         return savedContact;
     }
 
@@ -64,9 +65,9 @@ public class ContactsController implements ContactsIdempotentOperations, Contact
      */
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping
+    @GetMapping("/all")
     public List<ContactDto> getAllContacts() {
-        return this.contactsService.getContacts();
+        return this.contactsService.getAllContacts();
     }
 
     /**
@@ -74,7 +75,7 @@ public class ContactsController implements ContactsIdempotentOperations, Contact
      */
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/{contactId}")
+    @GetMapping("/{contactId}")
     public ContactDto getContact(
             @PathVariable("contactId")
             Long contactId) {
@@ -87,7 +88,7 @@ public class ContactsController implements ContactsIdempotentOperations, Contact
      */
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping(value = "/{contactId}")
+    @PutMapping("/{contactId}")
     public ContactDto updateContact(
             @PathVariable("contactId")
             Long contactId,
@@ -102,7 +103,7 @@ public class ContactsController implements ContactsIdempotentOperations, Contact
      */
     @Override
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping(value = "/{contactId}")
+    @DeleteMapping("/{contactId}")
     public void deleteContact(
             @PathVariable("contactId")
             Long contactId) {
