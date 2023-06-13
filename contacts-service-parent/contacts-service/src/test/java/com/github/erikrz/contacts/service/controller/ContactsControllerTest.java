@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.MockBeans;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,6 +23,7 @@ import com.github.erikrz.contacts.service.mapper.ContactMasker;
 import com.github.erikrz.contacts.service.service.ContactsService;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -127,13 +130,14 @@ class ContactsControllerTest {
 
     @Test
     void whenGetAllContacts_thenReturns200() throws Exception {
-        when(contactsService.getAllContacts()).thenReturn(List.of(savedContact));
+        when(contactsService.getAllContacts(any(Pageable.class)))
+                .thenReturn(new PageImpl<>(List.of(savedContact)));
 
         mockMvc.perform(get("/rest-api/v1/contacts/all"))
                 .andExpectAll(
                         status().isOk(),
                         content().contentType(APPLICATION_JSON),
-                        content().json(objectMapper.writeValueAsString(List.of(savedContact)))
+                        content().json(objectMapper.writeValueAsString(new PageImpl<>(List.of(savedContact))))
                 );
     }
 

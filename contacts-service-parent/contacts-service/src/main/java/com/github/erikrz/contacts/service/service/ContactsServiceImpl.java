@@ -1,7 +1,9 @@
 package com.github.erikrz.contacts.service.service;
 
-import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.github.erikrz.contacts.api.dto.request.CreateContactDto;
 import com.github.erikrz.contacts.api.dto.response.ContactDto;
@@ -30,12 +32,11 @@ public class ContactsServiceImpl implements ContactsService {
     }
 
     @Override
-    public List<ContactDto> getAllContacts() {
-        log.trace("getContacts()");
-        var persistedContacts = contactsRepository.findAll();
-        return persistedContacts.stream()
-                .map(contactMapper::toContactDto)
-                .toList();
+    public Page<ContactDto> getAllContacts(Pageable pageable) {
+        log.trace("getAllContacts({})", pageable);
+        var persistedContacts = contactsRepository.findAll(pageable);
+        return persistedContacts
+                .map(contactMapper::toContactDto);
     }
 
     @Override

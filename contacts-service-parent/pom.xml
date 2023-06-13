@@ -28,9 +28,12 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok.version>1.18.22</lombok.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.1.0</springdoc-openapi-starter-webmvc-ui.version>
+        <springdoc-openapi-core.version>1.7.0</springdoc-openapi-core.version>
         <swagger-annotations.version>2.2.11</swagger-annotations.version>
         <assertj.version>3.24.2</assertj.version>
         <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
+        <feign-bom.version>12.3</feign-bom.version>
+        <spring-cloud-openfeign-core.version>4.0.3</spring-cloud-openfeign-core.version>
 
         <assertj-assertions-generator.version>2.2.1</assertj-assertions-generator.version>
         <assertj-assertions-generator-maven-plugin.version>2.2.0</assertj-assertions-generator-maven-plugin.version>
@@ -60,9 +63,14 @@
             <dependency>
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-bom</artifactId>
-                <version>11.10</version>
+                <version>${feign-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-openfeign-core</artifactId>
+                <version>${spring-cloud-openfeign-core.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
@@ -78,6 +86,11 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-data-rest</artifactId>
+                <version>${springdoc-openapi-core.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.assertj</groupId>

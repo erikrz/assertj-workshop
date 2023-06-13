@@ -1,6 +1,7 @@
 package com.github.erikrz.contacts.client.feign.targets;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.github.erikrz.contacts.api.contract.ContactsIdempotentOperations;
 import com.github.erikrz.contacts.api.dto.request.CreateContactDto;
@@ -11,7 +12,6 @@ import feign.Param;
 import feign.RequestLine;
 
 import static com.github.erikrz.contacts.api.contract.ContactsPaths.ALL_CONTACTS_PATH;
-import static com.github.erikrz.contacts.api.contract.ContactsPaths.BASE_PATH;
 import static com.github.erikrz.contacts.api.contract.ContactsPaths.SINGLE_CONTACT_PATH;
 
 /**
@@ -28,7 +28,7 @@ public interface ContactsIdempotentClient extends ContactsIdempotentOperations {
      */
     @Override
     @RequestLine("GET " + ALL_CONTACTS_PATH)
-    List<ContactDto> getAllContacts();
+    Page<ContactDto> getAllContacts(Pageable pageable);
 
     /**
      * Get a single contact.

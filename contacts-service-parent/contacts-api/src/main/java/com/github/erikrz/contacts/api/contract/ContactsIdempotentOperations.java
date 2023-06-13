@@ -2,6 +2,8 @@ package com.github.erikrz.contacts.api.contract;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import jakarta.validation.Valid;
 
 import com.github.erikrz.contacts.api.dto.ExceptionMessage;
@@ -77,7 +79,9 @@ public interface ContactsIdempotentOperations {
                             description = "Internal Server Error.")
             }
     )
-    List<ContactDto> getAllContacts();
+    Page<ContactDto> getAllContacts(
+            @Parameter(hidden = true)
+            Pageable pageable);
 
     /**
      * GET a single contact by invoking GET {@value ContactsPaths#SINGLE_CONTACT_PATH} .

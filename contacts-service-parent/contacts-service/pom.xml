@@ -68,6 +68,10 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-data-rest</artifactId>
+        </dependency>
         <!-- Module that generates metadata from our @ConfigurationProperties classes, so that our IDE can recognize
          which properties are available to configure in our application.yml file. -->
         <dependency>

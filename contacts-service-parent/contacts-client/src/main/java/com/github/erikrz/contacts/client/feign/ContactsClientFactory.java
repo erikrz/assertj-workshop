@@ -9,6 +9,8 @@ import java.util.Optional;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.openapitools.jackson.nullable.JsonNullableModule;
+import org.springframework.cloud.openfeign.support.PageJacksonModule;
+import org.springframework.cloud.openfeign.support.SortJacksonModule;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -59,6 +61,8 @@ public class ContactsClientFactory {
                 .setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
                 .registerModule(new JavaTimeModule())
                 .registerModule(new JsonNullableModule())
+                .registerModule(new PageJacksonModule())
+                .registerModule(new SortJacksonModule())
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
