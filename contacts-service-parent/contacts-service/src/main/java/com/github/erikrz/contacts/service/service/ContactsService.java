@@ -1,8 +1,9 @@
 package com.github.erikrz.contacts.service.service;
 
-import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.github.erikrz.contacts.api.dto.request.CreateContactDto;
 import com.github.erikrz.contacts.api.dto.response.ContactDto;
 
@@ -22,7 +23,7 @@ public interface ContactsService {
      * Function to retrieve all existing contacts.
      * @return a list containing all contacts.
      */
-    List<ContactDto> getAllContacts();
+    Page<ContactDto> getAllContacts(Pageable pageable);
 
     /**
      * Function to get a contact by its Id.
