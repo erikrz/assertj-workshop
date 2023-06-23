@@ -54,7 +54,7 @@ public class ContactsController implements ContactsIdempotentOperations, Contact
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public ContactDto createContact(@RequestBody CreateContactDto contact) {
-        log.trace("createContact({})", contact);
+        log.trace("createContact({})", contactMasker.mask(contact));
         var savedContact = this.contactsService.saveContact(contact);
         var savedContactLocation = fromCurrentRequest().build().toUri() + "/" + savedContact.getId();
         getThreadLocalResponse().ifPresent(response -> response.setHeader("location", savedContactLocation));
@@ -70,6 +70,7 @@ public class ContactsController implements ContactsIdempotentOperations, Contact
     @GetMapping("/all")
     @PageableAsQueryParam
     public Page<ContactDto> getAllContacts(Pageable pageable) {
+        log.trace("getAllContacts({})", pageable);
         return this.contactsService.getAllContacts(pageable);
     }
 
@@ -82,6 +83,7 @@ public class ContactsController implements ContactsIdempotentOperations, Contact
     public ContactDto getContact(
             @PathVariable("contactId")
             Long contactId) {
+        log.trace("getContact({})", contactId);
         var contact = this.contactsService.getContactById(contactId);
         return contact.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
@@ -97,6 +99,7 @@ public class ContactsController implements ContactsIdempotentOperations, Contact
             Long contactId,
             @RequestBody
             CreateContactDto updatedContact) {
+        log.trace("updateContact({},{})", contactId, contactMasker.mask(updatedContact));
         var contact = this.contactsService.updateContactById(contactId, updatedContact);
         return contact.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
@@ -110,6 +113,7 @@ public class ContactsController implements ContactsIdempotentOperations, Contact
     public void deleteContact(
             @PathVariable("contactId")
             Long contactId) {
+        log.trace("deleteContact({})", contactId);
         var contact = this.contactsService.deleteContactById(contactId);
         if (contact.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);

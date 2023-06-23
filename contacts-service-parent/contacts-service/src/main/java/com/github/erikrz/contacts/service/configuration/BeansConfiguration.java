@@ -27,8 +27,9 @@ public class BeansConfiguration {
     }
 
     @Bean
-    public ContactsService contactsService(ContactsRepository contactsRepository, ContactMapper contactMapper) {
-        return new ContactsServiceImpl(contactsRepository, contactMapper);
+    public ContactsService contactsService(ContactsRepository contactsRepository, ContactMapper contactMapper,
+                                           ContactMasker contactMasker) {
+        return new ContactsServiceImpl(contactsRepository, contactMapper, contactMasker);
     }
 
 }
