@@ -1,6 +1,8 @@
 package com.github.erikrz.contacts.service.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.github.erikrz.contacts.service.model.Contact;
@@ -13,6 +15,6 @@ import com.github.erikrz.contacts.service.model.Contact;
  * good to go and use another server; 0 code changes needed.
  */
 @Repository
-public interface ContactsRepository extends JpaRepository<Contact, Long> {
+public interface ContactsRepository extends JpaRepository<Contact, Long>, QuerydslPredicateExecutor<Contact> {
 
 }
