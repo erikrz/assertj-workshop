@@ -16,6 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.github.erikrz.contacts.api.dto.request.CreateContactDto;
 import com.github.erikrz.contacts.api.dto.response.ContactDto;
 import com.github.erikrz.contacts.service.mapper.ContactMapper;
+import com.github.erikrz.contacts.service.mapper.ContactMasker;
 import com.github.erikrz.contacts.service.model.Contact;
 import com.github.erikrz.contacts.service.repository.ContactsRepository;
 import com.github.erikrz.contacts.service.test.TestDataFactory;
@@ -35,6 +36,7 @@ import static org.mockito.Mockito.when;
 class ContactsServiceImplTest {
 
     private final ContactMapper contactMapper = Mappers.getMapper(ContactMapper.class);
+    private final ContactMasker contactMasker = Mappers.getMapper(ContactMasker.class);
     private final ContactDto savedContact = ContactDto.builder()
             .id(1L)
             .firstName("Erik")
@@ -58,7 +60,7 @@ class ContactsServiceImplTest {
 
     @BeforeEach
     public void initialize() {
-        contactsService = new ContactsServiceImpl(contactsRepository, contactMapper);
+        contactsService = new ContactsServiceImpl(contactsRepository, contactMapper, contactMasker);
     }
 
     @Test
