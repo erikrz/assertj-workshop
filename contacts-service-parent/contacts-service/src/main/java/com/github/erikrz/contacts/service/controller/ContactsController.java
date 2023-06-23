@@ -6,6 +6,7 @@ import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +26,11 @@ import com.github.erikrz.contacts.api.contract.ContactsNonIdempotentOperations;
 import com.github.erikrz.contacts.api.dto.request.CreateContactDto;
 import com.github.erikrz.contacts.api.dto.response.ContactDto;
 import com.github.erikrz.contacts.service.mapper.ContactMasker;
+import com.github.erikrz.contacts.service.model.Contact;
 import com.github.erikrz.contacts.service.service.ContactsService;
+import com.querydsl.core.types.Predicate;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
@@ -72,6 +76,24 @@ public class ContactsController implements ContactsIdempotentOperations, Contact
     public Page<ContactDto> getAllContacts(Pageable pageable) {
         log.trace("getAllContacts({})", pageable);
         return this.contactsService.getAllContacts(pageable);
+    }
+
+    /**
+     * Endpoint to allow search of contacts.
+     *
+     * @param predicate filters to apply when searching for contacts.
+     * @param pageable  how the results should be paginated .
+     * @return a pages of matching results.
+     */
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    @PageableAsQueryParam
+    public Page<ContactDto> searchContacts(
+            @QuerydslPredicate(root = Contact.class)
+            Predicate predicate,
+            @Parameter(hidden = true)
+            Pageable pageable) {
+        return this.contactsService.searchContacts(predicate, pageable);
     }
 
     /**
