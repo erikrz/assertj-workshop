@@ -4,8 +4,13 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+
 import com.github.erikrz.contacts.api.dto.request.CreateContactDto;
 import com.github.erikrz.contacts.api.dto.response.ContactDto;
+import com.github.erikrz.contacts.service.model.Contact;
+import com.querydsl.core.types.Predicate;
+
 
 /**
  * Service interfaces that describes contact operations.
@@ -24,6 +29,14 @@ public interface ContactsService {
      * @return a list containing all contacts.
      */
     Page<ContactDto> getAllContacts(Pageable pageable);
+
+    /**
+     * Function to search contacts.
+     * @param predicate the predicate to use to filter contacts.
+     * @param pageable the pagination information.
+     * @return a page of results containing contacts that match the predicate.
+     */
+    Page<ContactDto> searchContacts(Predicate predicate, Pageable pageable);
 
     /**
      * Function to get a contact by its Id.
